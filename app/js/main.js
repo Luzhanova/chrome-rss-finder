@@ -2,12 +2,33 @@
 
 chrome.runtime.onMessage.addListener(function(request, sender) {
     if (request.action == "getSource") {
-        message.innerText = request.source;
+        processPage(request.source);
     }
 });
 
-function onWindowLoad() {
+function processPage(pageHTML){
+    console.log('1111');
+    //message.innerText = pageHTML;
 
+    var links = $($.parseHTML(pageHTML)).filter("link[type='application/rss+xml']");
+    console.log(links);
+    //message.innerText = links;
+
+    var myList, fLen, i, myLink;
+
+    fLen = links.length;
+    myList = "<ul>";
+    for (i = 0; i < fLen; i++) {
+        myLink = links[i];
+        myList += "<li>" + myLink.href + "</li>";
+    }
+    myList += "</ul>";
+    message.innerHTML = myList;
+}
+//<link rel="alternate" type="application/rss+xml" title="The Devochki &raquo; Лента" href="http://thedevochki.com/feed/" />
+
+function onWindowLoad() {
+    console.log('onStart');
     var message = document.querySelector('#message');
 
     chrome.tabs.executeScript(null, {
@@ -22,4 +43,6 @@ function onWindowLoad() {
 }
 
 window.onload = onWindowLoad;
+
+
 
