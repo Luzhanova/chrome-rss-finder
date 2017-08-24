@@ -1,29 +1,31 @@
 'use strict';
 
-chrome.runtime.onMessage.addListener(function(request, sender) {
+chrome.runtime.onMessage.addListener(function (request, sender) {
     if (request.action == "getSource") {
         processPage(request.source);
     }
 });
 
-function processPage(pageHTML){
+function processPage(pageHTML) {
     console.log('1111');
     //message.innerText = pageHTML;
 
     var links = $($.parseHTML(pageHTML)).filter("link[type='application/rss+xml']");
     console.log(links);
-    //message.innerText = links;
 
-    var myList, fLen, i, myLink;
+    var fLen, i, myLink;
 
-    fLen = links.length;
-    myList = "<ul>";
+     fLen = links.length;
+
     for (i = 0; i < fLen; i++) {
         myLink = links[i];
-        myList += "<li>" + myLink.href + "</li>";
+        var label = $("<label for='title'>" + links[i].title + "</label>")
+        $("#message").append(label);
+        var input1 = $("<input type='text' value='" + links[i].href + "' />");
+        $("#message").append(input1);
+
     }
-    myList += "</ul>";
-    message.innerHTML = myList;
+
 }
 //<link rel="alternate" type="application/rss+xml" title="The Devochki &raquo; Лента" href="http://thedevochki.com/feed/" />
 
@@ -33,7 +35,7 @@ function onWindowLoad() {
 
     chrome.tabs.executeScript(null, {
         file: "js/getPagesSource.js"
-    }, function() {
+    }, function () {
         // If you try and inject into an extensions page or the webstore/NTP you'll get an error
         if (chrome.runtime.lastError) {
             message.innerText = 'There was an error injecting script : \n' + chrome.runtime.lastError.message;
