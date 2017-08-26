@@ -15,17 +15,35 @@ function processPage(pageHTML) {
 
     var fLen, i, myLink;
 
-     fLen = links.length;
+    fLen = links.length;
 
     for (i = 0; i < fLen; i++) {
         myLink = links[i];
-        var label = $("<label for='title'>" + links[i].title + "</label>")
-        $("#message").append(label);
-        var input1 = $("<input type='text' value='" + links[i].href + "' />");
-        $("#message").append(input1);
+        var divOuter = $("<div class='outer'> </div>");
+        var divInner = $("<div class='inner'> </div>");
+        var label = $("<label for='title'>" + links[i].title + "</label>");
+        divOuter.append(label);
 
+        var textFieldId = "link" + i;
+        var input1 = $("<input id='" + textFieldId + "' type='text' value='" + links[i].href + "' />");
+        var btnCopy = $("<div class='copy'>Copy</div>");
+
+        addOnClick(btnCopy, textFieldId);
+
+        divInner.append(input1);
+        divInner.append(btnCopy);
+        divOuter.append(divInner);
+        $("#message").append(divOuter);
     }
+}
 
+function addOnClick(button, linkId) {
+    button.click(function () {
+        var selectedInput = $("#" + linkId);
+        selectedInput.select();
+        console.log(selectedInput);
+        document.execCommand('copy');
+    });
 }
 //<link rel="alternate" type="application/rss+xml" title="The Devochki &raquo; Лента" href="http://thedevochki.com/feed/" />
 
@@ -45,6 +63,3 @@ function onWindowLoad() {
 }
 
 window.onload = onWindowLoad;
-
-
-
