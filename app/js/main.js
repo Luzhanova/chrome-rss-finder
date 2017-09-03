@@ -26,13 +26,17 @@ function processPage(pageHTML) {
 
         var textFieldId = "link" + i;
         var input1 = $("<input id='" + textFieldId + "' type='text' value='" + links[i].href + "' />");
-        var btnCopy = $("<div class='copy'>Copy</div>");
+        var btnCopy = $("<div class='copy'><div class='copy-inner'>Copy</div></div>");
+        var separator = $("<hr/>");
 
         addOnClick(btnCopy, textFieldId);
 
         divInner.append(input1);
         divInner.append(btnCopy);
-        divOuter.append(divInner);
+               divOuter.append(divInner);
+        if (i < fLen-1) {
+            divOuter.append(separator);
+        }
         $("#message").append(divOuter);
     }
 }
@@ -45,7 +49,6 @@ function addOnClick(button, linkId) {
         document.execCommand('copy');
     });
 }
-//<link rel="alternate" type="application/rss+xml" title="The Devochki &raquo; Лента" href="http://thedevochki.com/feed/" />
 
 function onWindowLoad() {
     console.log('onStart');
@@ -59,7 +62,10 @@ function onWindowLoad() {
             message.innerText = 'There was an error injecting script : \n' + chrome.runtime.lastError.message;
         }
     });
-
+    $("#ico-close").click(function(){
+        window.close();
+    });
 }
 
 window.onload = onWindowLoad;
+
