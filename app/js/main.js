@@ -17,30 +17,33 @@ function processPage(pageHTML) {
 
     fLen = links.length;
 
-    for (i = 0; i < fLen; i++) {
-        myLink = links[i];
-        var divOuter = $("<div class='outer'> </div>");
-        var divInner = $("<div class='inner'> </div>");
-        var label = $("<label for='title'>" + links[i].title + "</label>");
-        divOuter.append(label);
+    if (fLen == 0) {
+        $("#error").show();
+    } else {
+        for (i = 0; i < fLen; i++) {
+            myLink = links[i];
+            var divOuter = $("<div class='outer'> </div>");
+            var divInner = $("<div class='inner'> </div>");
+            var label = $("<label for='title'>" + links[i].title + "</label>");
+            divOuter.append(label);
 
-        var textFieldId = "link" + i;
-        var input1 = $("<input id='" + textFieldId + "' type='text' value='" + links[i].href + "' />");
-        var btnCopy = $("<div class='copy'><div class='copy-inner'>Copy</div></div>");
-        var separator = $("<hr/>");
+            var textFieldId = "link" + i;
+            var input1 = $("<input id='" + textFieldId + "' type='text' value='" + links[i].href + "' />");
+            var btnCopy = $("<div class='copy'><div class='copy-inner'>Copy</div></div>");
+            var separator = $("<hr/>");
 
-        addOnClick(btnCopy, textFieldId);
+            addOnClick(btnCopy, textFieldId);
 
-        divInner.append(input1);
-        divInner.append(btnCopy);
-               divOuter.append(divInner);
-        if (i < fLen-1) {
-            divOuter.append(separator);
+            divInner.append(input1);
+            divInner.append(btnCopy);
+            divOuter.append(divInner);
+            if (i < fLen - 1) {
+                divOuter.append(separator);
+            }
+            $("#message").append(divOuter);
         }
-        $("#message").append(divOuter);
     }
 }
-
 function addOnClick(button, linkId) {
     button.click(function () {
         var selectedInput = $("#" + linkId);
@@ -62,7 +65,7 @@ function onWindowLoad() {
             message.innerText = 'There was an error injecting script : \n' + chrome.runtime.lastError.message;
         }
     });
-    $("#ico-close").click(function(){
+    $("#ico-close").click(function () {
         window.close();
     });
 }

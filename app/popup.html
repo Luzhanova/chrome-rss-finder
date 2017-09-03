@@ -1,17 +1,26 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<title>RSS finder</title>
-		<meta charset="UTF-8" />
-		<link rel="stylesheet" type="text/css" href="css/style.css" />
-		<script src="js/jquery-3.2.1.min.js"></script>
-		<script src="js/main.js"></script>
-	</head>
+<head>
+    <title>RSS finder</title>
+    <meta charset="UTF-8"/>
+    <link rel="stylesheet" type="text/css" href="css/style.css"/>
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/main.js"></script>
+</head>
 
-	<body>
+<body>
 
-	    <h1>Result of RSS Finder</h1>
-		<img id="ico-close" src="images/ico-close.png">
-		<div id='message' class="topComponent"> </div>
-	</body>
+<h1>Result of RSS Finder</h1>
+<img id="ico-close" src="images/ico-close.png">
+<div id='message' class="topComponent"></div>
+<div id="error" style="display:none">
+    <h2>Nothing found</h2>
+    <h3>What happened?</h3>
+    <ul>
+        <li>web page doesn’t contains RSS links</li>
+        <li>RSS links was constructed in spesific way</li>
+    </ul>
+    <a href="https://www.howtogeek.com/318401/how-to-find-or-create-an-rss-feed-for-any-website/" target="_blank">How to find RSS feed manually</a>
+</div>
+</body>
 </html>
