@@ -55,7 +55,8 @@ a:hover {
 }
 
 label {
-    color: #737272;
+    color: #4e4d4d;
+    font-size: 1.5em;
 }
 
 #ico-close {
@@ -87,6 +88,7 @@ input[type=text], select {
     box-sizing: border-box;
     overflow: hidden;
     float: left;
+    color: #a9a7a7;
 }
 
 .copy {

@@ -7,12 +7,19 @@ chrome.runtime.onMessage.addListener(function (request, sender) {
 });
 
 function processPage(pageHTML) {
-    console.log('1111');
-    //message.innerText = pageHTML;
+    var parsedHtml = $.parseHTML(pageHTML);
+    var tempDom = $('<output>').append(parsedHtml);
 
-    var links = $($.parseHTML(pageHTML)).filter("link[type='application/rss+xml']");
+    var links;
+
+    links = $("link[type='application/rss+xml']", tempDom);
+
+    if (links.length == 0) {
+        links = $("a[href*='rss']", tempDom);
+    }
+
+
     console.log(links);
-
     var fLen, i, myLink;
 
     fLen = links.length;
@@ -24,7 +31,12 @@ function processPage(pageHTML) {
             myLink = links[i];
             var divOuter = $("<div class='outer'> </div>");
             var divInner = $("<div class='inner'> </div>");
-            var label = $("<label for='title'>" + links[i].title + "</label>");
+            var titleText = links[i].title;
+
+            if (!titleText) {
+                titleText = links[i].text;
+            }
+            var label = $("<label for='title'>" + titleText + "</label>");
             divOuter.append(label);
 
             var textFieldId = "link" + i;
@@ -62,7 +74,7 @@ function onWindowLoad() {
     }, function () {
         // If you try and inject into an extensions page or the webstore/NTP you'll get an error
         if (chrome.runtime.lastError) {
-            message.innerText = 'There was an error injecting script : \n' + chrome.runtime.lastError.message;
+            $("#emptyPage").show();
         }
     });
     $("#ico-close").click(function () {
