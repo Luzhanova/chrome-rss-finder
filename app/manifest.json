@@ -25,7 +25,7 @@
    },
 
    "manifest_version": 2,
-   "name": "Plugin name",
+   "name": "RSS Finder",
    "minimum_chrome_version": "50.0.0.0",
 
    "permissions": [ "tabs", "http://*/*", "https://*/*", "contextMenus" ],
